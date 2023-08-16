@@ -1,44 +1,52 @@
-# RGB-LED-Library
-Basic RGB Led library for micropython - Tested in Raspberry Pi Pico
+# picoRGB library
 
-For use:
+A simple RGB LED library for Micropython, tested on Raspberry Pi Pico.
 
+## Usage
 
-myRGB = RGBLed(15,14,13,RGBLed.Anode) 
------
-Set RGB Led Pins RGBLed(#Red pin,#Green pin, #Blue pin,#RGB Led type -Anode or Cathode)
+Define RGBLed object, pin order is RGB.
+Supports common cathode or anode.
 
-myRGB.off() -    
-----
-Turn off all colors
+```python
+led = RGBLed(15,14,13,RGBLed.Cathode)
+```
 
-myRGB.set(120,50,75) 
-----
-Set color Set(#Red Led,#Green Led,#Blue Led)
+Turn off LED:
 
-myRGB.slowSet(10,200,195)     
-----
-Set color slowly SlowSet(#Red Led,#Green Led,#Blue Led,#delay - optional)
+```python
+led.off()
+```
 
-myRGB.show()                    
-----
-Show last color values
+Set custom color:
 
-myRGB.white()        
-----
-Set RGB led to white (255,255,255)
+```python
+led.setColor(120,50,75)
+```
 
-myRGB.yellow()        
-----
-Set RGB led to yellow (255,255,0)
+Set custom color slowly:
 
-myRGB.magenta()         
-----
-Set RGB led to magenta (255,0,255)
+```python
+led.slowSet(10,200,195)     
+```
 
-myRGB.cyan()               
-----
-Set RGB led to cyan (0,255,255)  
+Show LED information:
 
-## Features
-* RGBLed.slowSet() function must be a thread function
+```python
+led.show()                    
+```
+
+Set LED to white:
+
+```python
+led.white()        
+```
+
+Set LED to yellow:
+
+```python
+led.yellow()
+```
+
+## About
+
+This project was originally forked from [sonmezarda](https://github.com/sonmezarda/RGB-LED-Library).
