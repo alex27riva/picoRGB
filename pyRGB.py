@@ -8,15 +8,15 @@ class RGBLed:
     anode = 'anode'
     cathode = 'cathode'
     
-    def __init__(self, red_pin, green_pin, blue_pin, ledType, currentValueR = 0, currentValueG = 0, currentValueB=0):
+    def __init__(self, red_pin, green_pin, blue_pin, ledType, red_val = 0, green_val = 0, blue_val=0):
         self.red_pin = red_pin
         self.green_pin = green_pin
         self.blue_pin = blue_pin
         self.ledType = ledType
-        self.currentValueR = currentValueR
-        self.currentValueG = currentValueG
-        self.currentValueB = currentValueB
-        self.Set(currentValueR,currentValueG,currentValueB)
+        self.currentValueR = red_val
+        self.currentValueG = green_val
+        self.currentValueB = blue_val
+        self.setColor(red_val,green_val,blue_val)
      
     def show(self):
         print("Red Pin:", self.red_pin)
@@ -125,4 +125,4 @@ class RGBLed:
         self.currentValueR = r
         self.currentValueG = g
         self.currentValueB = b
-        self.Set(r,g,b)
+        self.setColor(r,g,b)
