@@ -13,25 +13,19 @@ class RGBLed:
         self.green_pin = green_pin
         self.blue_pin = blue_pin
         self.ledType = ledType
-        self.currentValueR = red_val
-        self.currentValueG = green_val
-        self.currentValueB = blue_val
+        self.red_val = red_val
+        self.green_val = green_val
+        self.blue_val = blue_val
         self.setColor(red_val,green_val,blue_val)
      
     def show(self):
-        print("Red Pin:", self.red_pin)
-        print("Green Pin:", self.green_pin)
-        print("Blue Pin:", self.blue_pin)
-        print("Led Type:",self.ledType)
-        print("Current Red Value:",self.currentValueR)
-        print("Current Green Value:",self.currentValueG)
-        print("Current Blue Value:",self.currentValueB)
+        print("Led pins ({},{},{}), current values ({},{},{})".format(self.red_pin,self.green_pin, self.blue_pin, self.red_val, self.green_val, self.blue_val))
         
     def setColor(self,r,g,b):
         if self.ledType == 'anode':
-            self.currentValueR = r
-            self.currentValueG = g
-            self.currentValueB = b
+            self.red_val = r
+            self.green_val = g
+            self.blue_val = b
             
             r = map(r,0,255,65534,0)
             g = map(g,0,255,65534,0)
@@ -43,9 +37,9 @@ class RGBLed:
             green_pin_pwm.duty_u16(g)
             blue_pin_pwm.duty_u16(b)
         elif self.ledType == 'cathode':
-            self.currentValueR = r
-            self.currentValueG = g
-            self.currentValueB = b
+            self.red_val = r
+            self.green_val = g
+            self.blue_val = b
             
             r = map(r,0,255,0,65534)
             g = map(g,0,255,0,65534)
@@ -59,7 +53,16 @@ class RGBLed:
     
     def off(self):
         self.setColor(0,0,0)
-        
+    
+    def red(self):
+        self.setColor(255,0,0)
+
+    def green(self):
+        self.setColor(0,255,0)
+    
+    def blue(self):
+        self.setColor(0,0,255)
+
     def white(self):
         self.setColor(255,255,255)
     
@@ -73,56 +76,56 @@ class RGBLed:
         self.setColor(0,255,255)
         
     def slowSet(self,r,g,b,delay = 0.01):
-        if r>self.currentValueR:
+        if r>self.red_val:
             rStep = 1
         else:
             rStep -= 1
         
-        if g>self.currentValueG:
+        if g>self.green_val:
             gStep = 1
         else:
             gStep = -1
             
-        if b>self.currentValueB:
+        if b>self.blue_val:
             bStep = 1
         else:
             bStep = -1
 
         if self.ledType == 'anode':
-            for i in range(self.currentValueR,r,rStep):
+            for i in range(self.red_val,r,rStep):
                 x = map(i,0,255,65534,0)
                 red_pin_pwm = PWM(Pin(self.red_pin))
                 red_pin_pwm.duty_u16(x)
                 utime.sleep(delay)
-            for i in range(self.currentValueG,g,gStep):
+            for i in range(self.green_val,g,gStep):
                 x = map(i,0,255,65534,0)
                 green_pin_pwm = PWM(Pin(self.green_pin))
                 green_pin_pwm.duty_u16(x)
                 utime.sleep(delay)
-            for i in range(self.currentValueB,b,bStep):
+            for i in range(self.blue_val,b,bStep):
                 x = map(i,0,255,65534,0)
                 blue_pin_pwm = PWM(Pin(self.blue_pin))
                 blue_pin_pwm.duty_u16(x)
                 utime.sleep(delay)
                 
         elif self.ledType == 'cathode':
-            for i in range(self.currentValueR,r,rStep):
+            for i in range(self.red_val,r,rStep):
                 x = map(i,0,255,0,65534)
                 red_pin_pwm = PWM(Pin(self.red_pin))
                 red_pin_pwm.duty_u16(x)
                 utime.sleep(delay)
-            for i in range(self.currentValueG,g,gStep):
+            for i in range(self.green_val,g,gStep):
                 x = map(i,0,255,0,65534)
                 green_pin_pwm = PWM(Pin(self.green_pin))
                 green_pin_pwm.duty_u16(x)
                 utime.sleep(delay)
-            for i in range(self.currentValueB,b,bStep):
+            for i in range(self.blue_val,b,bStep):
                 x = map(i,0,255,0,65534)
                 blue_pin_pwm = PWM(Pin(self.blue_pin))
                 blue_pin_pwm.duty_u16(x)
                 utime.sleep(delay)
                 
-        self.currentValueR = r
-        self.currentValueG = g
-        self.currentValueB = b
+        self.red_val = r
+        self.green_val = g
+        self.blue_val = b
         self.setColor(r,g,b)
